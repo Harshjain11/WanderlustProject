@@ -8,11 +8,14 @@ module.exports.index =async (req,res,next) => {
     const allListings =await Listing.find({})
     res.render("listings/index.ejs",{allListings});
 };
-module.exports.access =async (req,res,next) => {
-    console.log("category");
-    let {search} = req.params;
+module.exports.category =async (req,res,next) => {
+   
+    let {cat} = req.params;
+    console.log(cat);
     let  allListings =await Listing.find({});
-    allListings =  allListings.filter((ele) => { ele.category == search}); 
+    console.log(allListings.length);
+    allListings =  allListings.filter((ele) => { ele.category === cat}); 
+    console.log(allListings.length);
     res.render("listings/index.ejs",{allListings});
 };
 
@@ -23,6 +26,7 @@ module.exports.renderNewForm = (req,res) => {
 
 module.exports.showListing = async (req,res,next) => {
     let {id} = req.params;
+    
     const listing =await Listing.findById(id).populate({path:"reviews", populate:{path:"author"},}).populate("owner");
     if(!listing) {
         req.flash("error","Listing you requested does not exists !");
