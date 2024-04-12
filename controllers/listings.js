@@ -8,8 +8,16 @@ module.exports.index =async (req,res,next) => {
     const allListings =await Listing.find({})
     res.render("listings/index.ejs",{allListings});
 };
+module.exports.access =async (req,res,next) => {
+    console.log("category");
+    let {search} = req.params;
+    let  allListings =await Listing.find({});
+    allListings =  allListings.filter((ele) => { ele.category == search}); 
+    res.render("listings/index.ejs",{allListings});
+};
 
 module.exports.renderNewForm = (req,res) => {
+
     res.render("listings/new.ejs");
 };
 
@@ -29,11 +37,7 @@ module.exports.createListing  = async  (req,res,next) => {//if post req through 
         query: req.body.listings.location,
         limit: 1,
       })
-        .send()
-
-
-       
-
+        .send();
     let url =req.file.path;
     let filename= req.file.filename;
 const newListing = new Listing(req.body.listings);

@@ -15,7 +15,7 @@ router.route("/")
       .post(isLoggedIn,upload.single('listings[image]'),validateListing,wrapAsync(listingController.createListing));
       
 
-
+router.get("/quick/:access",listingController.access);
 //new route
 router.get("/new", isLoggedIn,listingController.renderNewForm);
 
