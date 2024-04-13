@@ -1,4 +1,4 @@
-//C:\Program Files\mongoshell\mongosh-1.10.6-win32-x64\bin
+
 if (process.env.NODE_ENV != "production") {
     require('dotenv').config();
 }
@@ -18,6 +18,7 @@ const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -33,7 +34,8 @@ app.use(express.static(path.join(__dirname,"/public")));
 
 
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+// const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const dbUrl = process.env.ATLASDB_URL;
 
 main().then( () => {
     console.log("connected to db");
@@ -42,10 +44,22 @@ main().then( () => {
 });
 
 async function main() {
-    await mongoose.connect(MONGO_URL);
+    await mongoose.connect(dbUrl);
 }
 
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto:{
+        secret:"mysupersecretcode"
+    },
+    touchAfter:24*60*60
+});
+store.on("error",() => {
+    console.log("Error in mongo session stroe",err);
+});
+
 const sessionOptions = {
+    store,
     secret:"mysupersecretcode",
     resave:false,
     saveUninitialized:true,
@@ -54,7 +68,9 @@ const sessionOptions = {
         maxAge:1000*60*60*24*3,
         httpOnly:true
     },
-}
+};
+
+
 
 
 

@@ -11,11 +11,11 @@ module.exports.index =async (req,res,next) => {
 module.exports.category =async (req,res,next) => {
    
     let {cat} = req.params;
-    console.log(cat);
+   
     let  allListings =await Listing.find({});
-    console.log(allListings.length);
-    allListings =  allListings.filter((ele) => { ele.category === cat}); 
-    console.log(allListings.length);
+    
+    allListings =  allListings.filter((ele) =>  ele.category == cat); 
+    
     res.render("listings/index.ejs",{allListings});
 };
 
