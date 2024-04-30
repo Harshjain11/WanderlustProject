@@ -89,15 +89,9 @@ app.use((req,res ,next) => {
     next();
 });
 
-// app.get("/demouser",async (req,res) => {
-//     let fakeUser = new User({
-//         email:"student@getMaxListeners.com",
-//         username:"delta Student"
-//     });
-
-//     let registeredUser = await User.register(fakeUser,"helloWorld");
-//     res.send(registeredUser);
-// })
+app.use("/",(req,res) => {
+    res.redirect("/listings");
+});
 app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
 app.use("/",userRouter);

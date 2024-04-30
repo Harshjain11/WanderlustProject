@@ -130,3 +130,11 @@ body {
    height:400px;
    width:80vh;
 }
+
+@media(max-width:600px) {
+    #map {
+        height:150px; 
+        width:70vh;
+    }
+}
+
