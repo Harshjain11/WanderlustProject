@@ -127,14 +127,14 @@ body {
 /* map */
 
 #map {
-   height:400px;
-   width:80vh;
+   height:300px;
+   width:70vh;
 }
 
-@media(max-width:600px) {
+@media(max-width:800px) {
     #map {
-        height:150px; 
-        width:70vh;
+        height:200px; 
+        width:80%;
     }
 }
 
