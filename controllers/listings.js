@@ -42,7 +42,7 @@ module.exports.createListing  = async  (req,res,next) => {
         query: req.body.listings.location,
         limit: 1,
       })
-//have removed send() from this line
+    .send();
     let url =req.file.path;
     let filename= req.file.filename;
 const newListing = new Listing(req.body.listings);
