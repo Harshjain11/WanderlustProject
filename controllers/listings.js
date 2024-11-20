@@ -35,13 +35,14 @@ module.exports.showListing = async (req,res,next) => {
     res.render("listings/show.ejs",{listing});
 };
 
-module.exports.createListing  = async  (req,res,next) => {//if post req through postman or hoppscotch then also user should be logged in
+module.exports.createListing  = async  (req,res,next) => {
+    //if post req through postman or hoppscotch then also user should be logged in
     // let {title,description,image,price,location,country} =req.body;
     let  response =await geocodingClient.forwardGeocode({
         query: req.body.listings.location,
         limit: 1,
       })
-        .send();
+    .send();
     let url =req.file.path;
     let filename= req.file.filename;
 const newListing = new Listing(req.body.listings);
