@@ -16,7 +16,7 @@ const ExpressError = require("./utils/ExpressError.js");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
-
+import { injectSpeedInsights } from '@vercel/speed-insights';
 const session = require("express-session");
 const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
@@ -96,6 +96,7 @@ app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
 app.use("/",userRouter);
 
+injectSpeedInsights();
 
 app.all("*",(req, res, next) => {
     next(new ExpressError(404,"page not found"));
